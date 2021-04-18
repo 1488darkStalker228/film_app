@@ -1,7 +1,7 @@
 <template>
-  <main class="main">
+  <div class="main">
     <div class="container"></div>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -11,9 +11,5 @@ export default {
 </script>
 
 <style lang='scss'>
-  .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
+  @import "MainPage";
 </style>

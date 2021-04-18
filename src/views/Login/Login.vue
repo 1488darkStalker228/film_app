@@ -1,27 +1,28 @@
 <template>
   <div class="login">
     <el-card class="login__card">
-      <h3 class="login__title h3">Sing in</h3>
+      <h3 class="login__title h3">
+        Sing in
+      </h3>
       <div class="login__error" v-if="errorLogin">
-        <span>Неправильный логин или пароль</span>
+        <span>
+          Неправильный логин или пароль
+        </span>
       </div>
-
-      <el-form class="test" :model="userData" :rules="rules" ref="ruleForm" label-width="120px">
-
+      <el-form :model="userData" :rules="rules" ref="ruleForm" label-width="120px">
         <el-form-item prop="userName">
           <el-input v-model="userData.userName" placeholder="Имя пользователя"></el-input>
         </el-form-item>
-
         <el-form-item prop="password">
           <el-input v-model="userData.password" placeholder="Пароль" type='password'></el-input>
         </el-form-item>
-
         <el-form-item>
           <el-button class="login__btn-login" type="primary" @click="submitForm('ruleForm')">
-            <span class="text">Войти</span>
+            <span class="text">
+              Войти
+            </span>
           </el-button>
         </el-form-item>
-
       </el-form>
     </el-card>
   </div>
@@ -103,52 +104,5 @@ export default {
 </script>
 
 <style lang='scss'>
-  .login {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: url("../assets/images/background.jpg");
-    background-size: cover;
-
-    &__card {
-      width: 354px;
-      position: relative;
-    }
-
-    &__title {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-
-    &__error {
-      position: absolute;
-      top: 50px;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      color: #F56C6C;
-      span {
-        line-height: 22px;
-      }
-    }
-
-    .el-form-item {
-      margin-bottom: 16px;
-    }
-    .el-form-item__error {
-      position: static;
-    }
-
-    &__btn-login {
-      width: 100%;
-      padding: 8px 20px !important;
-      font-family: inherit;
-    }
-    .el-form-item:last-child {
-      margin: 0;
-    }
-  }
+  @import "Login";
 </style>

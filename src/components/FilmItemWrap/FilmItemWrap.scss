@@ -1,0 +1,14 @@
+.item-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .el-pagination {
+    align-self: center;
+  }
+  .el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li {
+    background-color: #dbdcde;
+    color: #303133;
+  }
+}
