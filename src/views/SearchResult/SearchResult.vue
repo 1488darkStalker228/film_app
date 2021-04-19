@@ -9,22 +9,6 @@
         :totalPage="totalPage"
         @page-number="findMovies"
       />
-      <!--Может быть компонентом-->
-<!--      <div class="result__wrapper">-->
-<!--        <FilmItem-->
-<!--          v-for="result of results"-->
-<!--          :key="result.id"-->
-<!--          :result="result"-->
-<!--          @toggle-to-favorites="toggleToFavorites"-->
-<!--        />-->
-<!--        <el-pagination-->
-<!--          :small="smallPagination"-->
-<!--          background-->
-<!--          layout="prev, pager, next"-->
-<!--          :total="totalPage * 10"-->
-<!--          @current-change="handleCurrentChange"-->
-<!--        />-->
-<!--      </div>-->
     </div>
   </div>
 </template>
@@ -53,7 +37,6 @@
         const results = await findMovies.json();
         this.results = results.results;
         this.totalPage = results.total_pages;
-        console.log(results);
       }
     },
 

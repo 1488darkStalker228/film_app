@@ -3,6 +3,14 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  justify-content: space-between;
+
+  &__pagination {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
 
   .el-pagination {
     align-self: center;

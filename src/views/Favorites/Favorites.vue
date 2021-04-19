@@ -31,11 +31,12 @@
     methods: {
       async getFavorites(page) {
         const sessionId = JSON.parse(localStorage.getItem('sessionId'));
-        const url = `https://api.themoviedb.org/3/account/{account_id}/favorite/movies?api_key=${this.$store.getters.API_KEY}&session_id=${sessionId}&language=en-US&sort_by=created_at.asc&page=${String(page)}`;
+        const url = `https://api.themoviedb.org/3/account/{account_id}/favorite/movies?api_key=${this.$store.getters.API_KEY}&session_id=${sessionId}&language=en-US&sort_by=created_at.asc&page=${page}`;
         const getFavorites = await fetch(url);
         const favorites = await getFavorites.json();
         this.favorites = favorites.results;
         this.totalPage = favorites.total_pages;
+        this.$store.commit({type: 'SET_CURRENT_PAGE', value: page});
       }
     },
 

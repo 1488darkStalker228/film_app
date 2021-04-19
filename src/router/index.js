@@ -5,7 +5,8 @@ import MainLayout from '../layouts/MainLayout.vue';
 import MainPage from '../views/MainPage/MainPage.vue';
 import SearchResult from '../views/SearchResult/SearchResult.vue';
 import Favorites from '../views/Favorites/Favorites.vue';
-import MovieList from '../views/MovieList/MovieList.vue';
+import FilmsList from '../views/FilmsList/FilmsList.vue';
+import FilmPage  from '../views/FilmPage/FilmPage.vue';
 
 Vue.use(VueRouter);
 
@@ -30,12 +31,17 @@ const routes = [
       {
         path: '/lists',
         name: 'Lists',
-        component: MovieList,
+        component: FilmsList,
       },
       {
         path: '/search',
         name: 'Search',
         component: SearchResult,
+      },
+      {
+        path: '/film/:id',
+        name: 'FilmPage',
+        component: FilmPage
       },
       {
         path: '/favorites',

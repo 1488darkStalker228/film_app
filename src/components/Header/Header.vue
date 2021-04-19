@@ -70,7 +70,13 @@
       },
 
       searchFilms() {
-        this.$router.push({name: 'Search', query: {'films': this.query}});
+        if (this.query) {
+          this.$router.push(
+            {name: 'Search', query: {'films': this.query}}
+          )
+          .catch(() => {});
+          this.query = '';
+        }
       },
 
       toggleMobileNav() {

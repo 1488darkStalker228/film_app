@@ -59,8 +59,14 @@
       },
 
       searchFilms() {
-        this.$router.push({name: 'Search', query: {'films': this.query}});
-        this.$emit('close-mobile-nav');
+        if (this.query) {
+          this.$router.push(
+            {name: 'Search', query: {'films': this.query}}
+          )
+          .catch(() => {});
+          this.$emit('close-mobile-nav');
+          this.query = '';
+        }
       }
     }
   }
