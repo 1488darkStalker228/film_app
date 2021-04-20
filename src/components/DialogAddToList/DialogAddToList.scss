@@ -1,0 +1,15 @@
+.dialog {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    li {
+      color: #303133;
+      padding: 8px;
+      transition: all 0.2s;
+    }
+    li:hover {
+      background:#dbdcde;
+    }
+  }
+}

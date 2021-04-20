@@ -56,5 +56,5 @@
 </script>
 
 <style lang="scss">
-  @import "FilmItemWrap";
+  @import "FilmItemsWrap";
 </style>

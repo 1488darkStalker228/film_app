@@ -45,10 +45,7 @@
               </span>
             </div>
             <div class="page__lists">
-              <List/>
-              <span class="text">
-                В список
-              </span>
+              <DialogAddToList :id="result.id"/>
             </div>
           </div>
         </div>
@@ -59,12 +56,12 @@
 
 <script>
   import Favorite from '../../assets/svg/Favorite.vue';
-  import List from '../../assets/svg/List.vue';
+  import DialogAddToList from '../../components/DialogAddToList/DialogAddToList.vue';
 
   export default {
     components: {
       Favorite,
-      List
+      DialogAddToList
     },
 
     name: 'FilmPage',
@@ -131,6 +128,6 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import "FilmPage";
 </style>

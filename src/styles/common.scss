@@ -22,3 +22,25 @@
 .link-active {
   border-bottom: 1px solid;
 }
+
+.el-button {
+  padding: 8px 20px !important;
+}
+
+.el-dialog__header,
+.el-dialog__body,
+.el-dialog__footer {
+  padding: 0 !important;
+}
+
+.el-dialog__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.el-dialog {
+  padding: 16px;
+  width: 35% !important;
+  margin: 0 !important;
+}

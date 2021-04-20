@@ -4,7 +4,7 @@
       <h1 class="result__title title">
         Результаты поиска:
       </h1>
-      <FilmItemWrap
+      <FilmItemsWrap
         :results="results"
         :totalPage="totalPage"
         @page-number="findMovies"
@@ -15,10 +15,10 @@
 
 <script>
 
-  import FilmItemWrap from "../../components/FilmItemWrap/FilmItemWrap";
+  import FilmItemsWrap from "../../components/FilmItemsWrap/FilmItemsWrap";
 
   export default {
-    components: {FilmItemWrap},
+    components: {FilmItemsWrap},
 
     name: 'SearchResult',
 

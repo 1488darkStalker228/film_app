@@ -1,10 +1,10 @@
 <template>
-  <div class="favorites">
+  <div class="favorites" v-loading="loading">
     <div class="container">
       <h1 class="favorites__title title">
         Избранное:
       </h1>
-      <FilmItemWrap
+      <FilmItemsWrap
         :results="favorites"
         :total-page="totalPage"
         @page-number="getFavorites"
@@ -14,10 +14,10 @@
 </template>
 
 <script>
-  import FilmItemWrap from "../../components/FilmItemWrap/FilmItemWrap";
+  import FilmItemsWrap from "../../components/FilmItemsWrap/FilmItemsWrap";
 
   export default {
-    components: {FilmItemWrap},
+    components: {FilmItemsWrap},
 
     name: 'Favorites',
 
@@ -25,6 +25,7 @@
       return {
         favorites: [],
         totalPage: 0,
+        loading: true
       }
     },
 
@@ -36,6 +37,7 @@
         const favorites = await getFavorites.json();
         this.favorites = favorites.results;
         this.totalPage = favorites.total_pages;
+        this.loading = false;
         this.$store.commit({type: 'SET_CURRENT_PAGE', value: page});
       }
     },
