@@ -17,7 +17,12 @@
           <el-input v-model="userData.password" placeholder="Пароль" type='password'></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="login__btn-login" type="primary" @click="submitForm('ruleForm')">
+          <el-button
+            class="login__btn-login"
+            type="primary"
+            @click="submitForm('ruleForm')"
+            :loading="loading"
+          >
             <span class="text">
               Войти
             </span>
@@ -29,78 +34,77 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      errorLogin: false,
-
-      userData: {
-        userName: 'dungeon_master228',
-        password: '14881347',
-      },
-
-      rules: {
-        userName: [
-          { required: true, message: 'Введите имя пользователя', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: 'Введите пароль', trigger: 'blur' },
-          { min: 4, max: 120, message: 'Минимум 4 символа', trigger: 'blur' }
-        ]
-      }
-    };
-  },
-
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.getSessionId();
-        } else {
-          return false;
+  export default {
+    data() {
+      return {
+        errorLogin: false,
+        loading: false,
+        userData: {
+          userName: 'dungeon_master228',
+          password: '14881347',
+        },
+        rules: {
+          userName: [
+            { required: true, message: 'Введите имя пользователя', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: 'Введите пароль', trigger: 'blur' },
+            { min: 4, max: 120, message: 'Минимум 4 символа', trigger: 'blur' }
+          ]
         }
-      });
+      };
     },
 
-    async getSessionId() {
-      this.errorLogin = false;
-
-      const getRequestToken = await fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key=${this.$store.getters.API_KEY}`);
-      const requestToken = await getRequestToken.json();
-
-      const validateRequestToken = await fetch(
-        `https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=${this.$store.getters.API_KEY}`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            username: this.userData.userName,
-            password: this.userData.password,
-            request_token: requestToken.request_token
-          })
-        }
-      );
-      const result = await validateRequestToken.json();
-
-      if (result.success) {
-        const reqSessionId = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=${this.$store.getters.API_KEY}`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            request_token: requestToken.request_token
-          })
+    methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.getSessionId();
+          } else {
+            return false;
+          }
         });
-        const sessionId = await reqSessionId.json();
+      },
 
-        localStorage.setItem('sessionId', JSON.stringify(sessionId.session_id));
+      async getSessionId() {
+        this.errorLogin = false;
+        this.loading = true;
 
-        this.$router.push({name: 'Main'});
-      } else {
-        this.errorLogin = true;
+        const getRequestToken = await fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key=${this.$store.getters.API_KEY}`);
+        const requestToken = await getRequestToken.json();
+
+        const validateRequestToken = await fetch(
+          `https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=${this.$store.getters.API_KEY}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              username: this.userData.userName,
+              password: this.userData.password,
+              request_token: requestToken.request_token
+            })
+          }
+        );
+        const result = await validateRequestToken.json();
+
+        if (result.success) {
+          const reqSessionId = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=${this.$store.getters.API_KEY}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              request_token: requestToken.request_token
+            })
+          });
+          const sessionId = await reqSessionId.json();
+          localStorage.setItem('sessionId', JSON.stringify(sessionId.session_id));
+          this.loading = false;
+          await this.$router.push({name: 'Main'});
+        } else {
+          this.errorLogin = true;
+          this.loading = false;
+        }
       }
     }
-  },
-
-}
+  }
 </script>
 
 <style lang='scss'>

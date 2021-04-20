@@ -1,6 +1,6 @@
 <template>
-  <div class="page">
-    <div class="container">
+  <div class="page" v-loading="loading">
+    <div class="container" v-if="!loading">
       <div class="page__content">
         <img
           class="page__img"
@@ -34,15 +34,21 @@
             </span>
           </div>
           <div class="page__action-wrap">
-            <div
-              class="page__favorite"
-              @click="toggleToFavorites(!isFav)"
-              :class="{'page__favorite_active' : isFav}"
-            >
-              <Favorite/>
-              <span class="text">
-                Избранное
-              </span>
+            <div class="page__favorite">
+              <el-button
+                @click="toggleToFavorites(!isFav)"
+                type="primary"
+                :class="{'page__favorite_active' : isFav}"
+                :loading="toggleLoading"
+              >
+                <span class="text" v-if="isFav">
+                  Убрать из избранного
+                </span>
+                <span class="text" v-else>
+                  Добавить в избранное
+                </span>
+
+              </el-button>
             </div>
             <div class="page__lists">
               <DialogAddToList :id="result.id"/>
@@ -55,12 +61,10 @@
 </template>
 
 <script>
-  import Favorite from '../../assets/svg/Favorite.vue';
   import DialogAddToList from '../../components/DialogAddToList/DialogAddToList.vue';
 
   export default {
     components: {
-      Favorite,
       DialogAddToList
     },
 
@@ -69,7 +73,9 @@
     data() {
       return {
         result: {},
-        isFav: false
+        isFav: false,
+        loading: true,
+        toggleLoading: false
       }
     },
 
@@ -102,9 +108,11 @@
             break;
           }
         }
+        this.loading = false;
       },
 
       async toggleToFavorites(val) {
+        this.toggleLoading = true;
         const sessionId = JSON.parse(localStorage.getItem('sessionId'));
         const url = `https://api.themoviedb.org/3/account/{account_id}/favorite?api_key=${this.$store.getters.API_KEY}&session_id=${sessionId}`;
         const film = await fetch(url, {
@@ -118,6 +126,7 @@
         });
         const result = await film.json();
         this.isFav = val;
+        this.toggleLoading = false;
         console.log(result);
       }
     },

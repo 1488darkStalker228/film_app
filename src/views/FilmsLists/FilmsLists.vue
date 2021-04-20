@@ -1,6 +1,6 @@
 <template>
   <div class="lists" v-loading="LOADING">
-    <div class="container">
+    <div class="container" v-if="!LOADING">
       <div class="lists__title-wrap">
         <h1 class="title">
           Списки фильмов:

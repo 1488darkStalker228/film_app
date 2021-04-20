@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import { mapActions,  mapGetters}from 'vuex';
+  import { mapActions,  mapGetters }from 'vuex';
 
   export default {
     name: 'DialogAddToList',
@@ -66,6 +66,7 @@
         });
 
         const res = await req.json();
+        this.dialogListVisible = false;
         console.log(res);
       }
     },

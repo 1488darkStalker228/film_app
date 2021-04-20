@@ -73,15 +73,13 @@
       height: 25px;
       fill: #909399;
     }
-    span {
-      font-size: 16px;
-      font-family: Montserrat,sans-serif;
-    }
   }
 
   &__favorite_active {
-    svg {
-      fill: #f3551b;
-    }
+    background: #c15127;
+    border: none;
+  }
+  &__favorite_active:hover {
+    background: #c77350;
   }
 }

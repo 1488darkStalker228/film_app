@@ -1,6 +1,6 @@
 <template >
-  <div class="result">
-    <div class="container">
+  <div class="result" v-loading="loading">
+    <div class="container" v-if="!loading">
       <h1 class="result__title title">
         Результаты поиска:
       </h1>
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-
   import FilmItemsWrap from "../../components/FilmItemsWrap/FilmItemsWrap";
 
   export default {
@@ -26,7 +25,8 @@
       return {
         results: [],
         totalPage: 0,
-        smallPagination: false
+        smallPagination: false,
+        loading: true
       }
     },
 
@@ -37,6 +37,7 @@
         const results = await findMovies.json();
         this.results = results.results;
         this.totalPage = results.total_pages;
+        this.loading = false;
       }
     },
 

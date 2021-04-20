@@ -6,14 +6,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     API_KEY: 'd448071af123aced6f063258a728b028',
-    current_page: 1,
+    currentPage: 1,
     lists: [],
     loading: true
   },
 
   mutations: {
     SET_CURRENT_PAGE(state, payload) {
-      state.current_page = payload.value;
+      state.currentPage = payload.value;
     },
 
     SET_FILMS_LISTS(state, payload) {
@@ -38,7 +38,7 @@ export default new Vuex.Store({
 
   getters: {
     API_KEY: (state) => state.API_KEY,
-    CURRENT_PAGE: (state) => state.current_page,
+    CURRENT_PAGE: (state) => state.currentPage,
     LISTS: (state) => state.lists,
     LOADING: (state) => state.loading
   },

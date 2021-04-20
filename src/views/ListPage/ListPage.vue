@@ -1,9 +1,10 @@
 <template>
-  <div class="page">
-    <div class="container">
+  <div class="page" v-loading="loading">
+    <div class="container" v-if="!loading">
       <h1 class="page__title title">
         {{title}}:
       </h1>
+      <!--Должна быть пагинация-->
       <FilmItemsWrap
         :results="results"
         :total-page="1"
@@ -23,7 +24,8 @@
     data() {
       return {
         results: [],
-        title: ''
+        title: '',
+        loading: true
       }
     },
 
@@ -38,6 +40,7 @@
         const res = await req.json();
         this.results = res.items;
         this.title = res.name;
+        this.loading = false;
         console.log(res);
       }
     }

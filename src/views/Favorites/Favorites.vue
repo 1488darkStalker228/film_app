@@ -1,6 +1,6 @@
 <template>
   <div class="favorites" v-loading="loading">
-    <div class="container">
+    <div class="container" v-if="!loading">
       <h1 class="favorites__title title">
         Избранное:
       </h1>
@@ -17,9 +17,9 @@
   import FilmItemsWrap from "../../components/FilmItemsWrap/FilmItemsWrap";
 
   export default {
-    components: {FilmItemsWrap},
-
     name: 'Favorites',
+
+    components: {FilmItemsWrap},
 
     data() {
       return {

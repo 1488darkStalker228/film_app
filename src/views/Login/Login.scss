@@ -14,14 +14,11 @@
 
   &__title {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 16px;
   }
 
   &__error {
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
+    padding: 8px;
     display: flex;
     justify-content: center;
     color: #F56C6C;
