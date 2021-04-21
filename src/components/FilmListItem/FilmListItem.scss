@@ -9,6 +9,10 @@
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
+  @media(max-width: 767px) {
+    width: 100%;
+    height: 200px;
+  }
 
   &__title {
     margin-bottom: 8px;
@@ -26,6 +30,9 @@
     text-overflow: ellipsis;
     overflow: hidden;
     color: #909399;
+    @media(max-width: 767px) {
+      -webkit-line-clamp: 5;
+    }
   }
 
   &__amount {

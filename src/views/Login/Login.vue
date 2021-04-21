@@ -66,12 +66,16 @@
         });
       },
 
+      getRequestToken() {
+        const url = `https://api.themoviedb.org/3/authentication/token/new?api_key=${this.$store.getters.API_KEY}`;
+        return fetch(url).then(res => res.json());
+      },
+
       async getSessionId() {
         this.errorLogin = false;
         this.loading = true;
 
-        const getRequestToken = await fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key=${this.$store.getters.API_KEY}`);
-        const requestToken = await getRequestToken.json();
+        const requestToken = await this.getRequestToken();
 
         const validateRequestToken = await fetch(
           `https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=${this.$store.getters.API_KEY}`, {
@@ -84,9 +88,9 @@
             })
           }
         );
-        const result = await validateRequestToken.json();
+        const res = await validateRequestToken.json();
 
-        if (result.success) {
+        if (res.success) {
           const reqSessionId = await fetch(`https://api.themoviedb.org/3/authentication/session/new?api_key=${this.$store.getters.API_KEY}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

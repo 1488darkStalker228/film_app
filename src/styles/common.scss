@@ -37,10 +37,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  @media(max-width: 767px) {
+    padding: 0 10px;
+  }
 }
 
 .el-dialog {
   padding: 16px;
   width: 35% !important;
   margin: 0 !important;
+  @media(max-width: 767px) {
+    width: 100% !important;
+  }
 }
