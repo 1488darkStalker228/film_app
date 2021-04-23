@@ -1,59 +1,75 @@
 <template>
   <div class="page" v-loading="loading">
     <div class="container" v-if="!loading">
-      <div class="page__content">
-        <img
-          class="page__img"
-          v-if="result.poster_path"
-          :src="'https://image.tmdb.org/t/p/w300_and_h450_bestv2/' + result.poster_path"
-          alt=""
-        />
-        <img
-          class="page__img"
-          alt=""
-          v-else src="@/assets/images/film.jpg"
-        >
-        <div class="page__info">
-          <h1
-            class="page__title title"
-            v-if="result.original_title"
-          >
-            <span>
-              {{result.original_title}}
-            </span>
-            <span>
-              {{result.release_date | year}}
-            </span>
-          </h1>
-          <div class="page__description">
-            <h3 class="page__sub-title sub-title">
-              Описание:
-            </h3>
-            <span class="text">
-              {{result.overview}}
-            </span>
-          </div>
-          <div class="page__action-wrap">
-            <div class="page__favorite">
-              <el-button
-                @click="toggleToFavorites(!isFav)"
-                type="primary"
-                :class="{'page__favorite_active' : isFav}"
-                :loading="toggleLoading"
+      <div class="page__content-wrap">
+        <div class="page__back" @click="$router.go(-1)">
+          <ArrowBack/>
+        </div>
+        <div class="page__content-top">
+          <img
+            class="page__img"
+            v-if="result.poster_path"
+            :src="'https://image.tmdb.org/t/p/w300_and_h450_bestv2/' + result.poster_path"
+            alt=""
+          />
+          <img
+            class="page__img"
+            alt=""
+            v-else src="@/assets/images/film.jpg"
+          />
+          <div class="page__info">
+            <div class="page__info-header">
+              <h1
+                class="page__title title"
+                v-if="result.original_title"
               >
-                <span class="text" v-if="isFav">
-                  Убрать из избранного
+                <span>
+                  {{result.original_title}}
                 </span>
-                <span class="text" v-else>
-                  Добавить в избранное
+                <span>
+                  {{result.release_date | year}}
                 </span>
-
-              </el-button>
+              </h1>
+              <div class="page__genres">
+                <ul>
+                  <li v-for="genre of genres"></li>
+                </ul>
+              </div>
             </div>
-            <div class="page__lists">
-              <DialogAddToList :id="result.id"/>
+            
+            <div class="page__description">
+              <h3 class="page__sub-title sub-title">
+                Описание:
+              </h3>
+              <span class="text">
+                {{result.overview}}
+              </span>
+            </div>
+            <div class="page__action-wrap">
+              <div class="page__favorite">
+                <el-button
+                  @click="toggleToFavorites(!isFav)"
+                  type="primary"
+                  :class="{'page__favorite_active' : isFav}"
+                  :loading="toggleLoading"
+                >
+                  <span class="text" v-if="isFav">
+                    Убрать из избранного
+                  </span>
+                  <span class="text" v-else>
+                    Добавить в избранное
+                  </span>
+
+                </el-button>
+              </div>
+              <div class="page__lists">
+                <DialogAddToList :id="result.id"/>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="page__content-bottom">
+
         </div>
       </div>
     </div>
@@ -61,11 +77,13 @@
 </template>
 
 <script>
+  import ArrowBack from '../../assets/svg/ArrowBack.vue';
   import DialogAddToList from '../../components/DialogAddToList/DialogAddToList.vue';
 
   export default {
     components: {
-      DialogAddToList
+      DialogAddToList,
+      ArrowBack
     },
 
     name: 'FilmPage',
@@ -83,6 +101,7 @@
     created() {
       this.getFilmById();
       this.getFavorites();
+      this.getActors();
     },
 
     methods: {
@@ -107,7 +126,7 @@
         for (const genre of res.genres) {
           for (const genre_id of this.result.genre_ids) {
             if (genre.id === genre_id) {
-              this.genres.push(genre.name)
+              this.genres.push(genre.name);
             }
           }
         }
@@ -144,6 +163,13 @@
         const res = await req.json();
         this.isFav = val;
         this.toggleLoading = false;
+        console.log(res);
+      },
+
+      async getActors() {
+        const url = `https://api.themoviedb.org/3/movie/${this.$route.params.id}/credits?api_key=${this.$store.getters.API_KEY}&language=en-US`;
+        const req = await fetch(url);
+        const res = await req.json();
         console.log(res);
       }
     },
